@@ -23,10 +23,12 @@ public class Tracker extends Operator{
 	}
 
 	protected DataContainer performs(ArrayList<DataContainer> recievedData) {
+		
 		for(DataContainer container: recievedData){
 			System.out.println("Track getData:  " + ((Coordinate)container.getData()).getX() + ":" + ((Coordinate)container.getData()).getY()
 					+ " from " + container.getPortFrom());
 		}
+		
 		return new TrackDataContainer(super.ID);
 	}
 

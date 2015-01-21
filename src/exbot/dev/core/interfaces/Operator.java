@@ -67,11 +67,9 @@ public abstract class Operator implements Runnable{
 		
 		for(String device: subscribeFrom){
 			Buffer b = this.dataRepo.get(device);
-			Devices.operatingDevicesOperator.size();
 			if(b!=null && b.getData()!=null){
 				recievedData.add(b.getData().clone());
-//				b.getData().getDataList().clear();
-				b.getData().set(null);
+				this.dataRepo.get(device).setData(null);
 			}
 		}
 		

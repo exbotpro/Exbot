@@ -18,8 +18,14 @@ public class Pixy extends Operator{
 		
 		x+=0.01;
 		y-=0.01;
+		try {
+			(new Thread(this)).sleep(1000);
+			dataContainer.set(new Coordinate(x, y));
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		dataContainer.set(new Coordinate(x, y));
 		return dataContainer;
 	}
 	
