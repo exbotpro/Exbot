@@ -24,9 +24,18 @@ public class USBWatcher implements Runnable{
 	
 	public void run(){
 		this.scanDevice();
-		this.findDevice(new Context(), (short) (0x046d), (short) (0xc077));
+		this.registConnectionOfOperators();
+		
+		this.watchDevice(new Context(), (short) (0x046d), (short) (0xc077));
 	}
 	
+	private void registConnectionOfOperators() {
+		for(String key: Devices.getOperatingDevicesOperator().keySet()){
+			Operator op = Devices.getOperatingDevicesOperator().get(key);
+			op.requestToRegist();
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	private void scanDevice(){
 		
@@ -58,7 +67,7 @@ public class USBWatcher implements Runnable{
 		return tok[tok.length-1];
 	}
 	
-	public void findDevice(Context context, short vendorId, short productId) {
+	public void watchDevice(Context context, short vendorId, short productId) {
 		 
 		 try {
 				UsbServices services = UsbHostManager.getUsbServices();
@@ -79,11 +88,11 @@ public class USBWatcher implements Runnable{
 					public void usbDeviceDetached(UsbServicesEvent arg0) {
 						String id = getID(arg0.getUsbDevice().toString());
 						System.out.println("unplugged device: "+id);
-						Operator op = Devices.getDeviceManager().getOperator(id);
+						Operator op = Devices.getOperator(id);
 						if(op!=null){
 							op.stop(false);
 							(new Thread(op)).stop();
-							Devices.getDeviceManager().removeOperator(id);
+							Devices.removeOperator(id);
 						}
 					}
 					

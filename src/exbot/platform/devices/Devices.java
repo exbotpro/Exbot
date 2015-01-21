@@ -1,50 +1,39 @@
 package exbot.platform.devices;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
 
 import exbot.dev.core.interfaces.Operator;
 
 public class Devices {
 
-	private static Devices deivceManager;
-	private static ConcurrentHashMap<String, Operator> operatingDevicesOperator = new ConcurrentHashMap<String, Operator>();
-	private static ConcurrentHashMap<String, Integer> portTable = new ConcurrentHashMap<String, Integer>();
+	public static HashMap<String, Operator> operatingDevicesOperator = new HashMap<String, Operator>();
+	public static HashMap<String, Integer> portTable = new HashMap<String, Integer>();
 	
-	private Devices(){}
-	
-	public static Devices getDeviceManager(){
-		if(deivceManager==null){
-			return new Devices();
-		}else{
-			return deivceManager;
-		}
-	}
-	
-	public static ConcurrentHashMap<String, Operator> getOperatingDevicesOperator() {
+	public static HashMap<String, Operator> getOperatingDevicesOperator() {
 		return operatingDevicesOperator;
 	}
 
-	public static ConcurrentHashMap<String, Integer> getPortTable() {
+	public static HashMap<String, Integer> getPortTable() {
 		return portTable;
 	}
 
-	public void addPort(String id, int port){
+	public static void addPort(String id, int port){
 		portTable.put(id, port);
 	}
 	
-	public int getPort(String id){
+	public static int getPort(String id){
 		return portTable.get(id);
 	}
 	
-	public void addOperator(Operator op){
+	public static void addOperator(Operator op){
 		operatingDevicesOperator.put(op.getID(), op);
 	}
 	
-	public Operator getOperator(String id){
+	public static Operator getOperator(String id){
 		return operatingDevicesOperator.get(id);
 	}
 	
-	public void removeOperator(String id){
+	public static void removeOperator(String id){
 		operatingDevicesOperator.remove(id);
 		portTable.remove(id);
 	}

@@ -39,7 +39,7 @@ public abstract class DataContainer implements Cloneable{
 		DataContainer data = null;
 		try {
 			data = (DataContainer) super.clone();
-			data.set(this.listOfData.clone());
+//			data.set(this.listOfData.clone());
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}

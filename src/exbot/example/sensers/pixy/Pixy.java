@@ -16,8 +16,8 @@ public class Pixy extends Operator{
 	protected DataContainer performs(ArrayList<DataContainer> recievedData) {
 		PixyDataContainer dataContainer = new PixyDataContainer(super.ID);
 		
-		x=+0.01; 
-		y=-0.01;
+		x+=0.01;
+		y-=0.01;
 		
 		dataContainer.set(new Coordinate(x, y));
 		return dataContainer;

@@ -34,7 +34,7 @@ public class AppFinder {
 	}
     
     public static void registOperator(Operator op){
-		Devices.getDeviceManager().addOperator(op);
+		Devices.addOperator(op);
     }
 
 	public void init(Operator op) {

@@ -17,5 +17,6 @@ public class Control {
 		AppFinder.registOperator(tracker);
 		tracker.run();
 		
+		
 	}
 }

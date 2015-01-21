@@ -12,7 +12,7 @@ public abstract class Operator implements Runnable{
 	protected boolean running = true;
 	protected ArrayList<String> subscribeFrom = new ArrayList<String>();
 	private Publisher publisher;
-	private Hashtable<String, Buffer> buffer;
+	private Hashtable<String, Buffer> dataRepo;
 	
 	/**
 	 * This constructor is to set the ID of your application 
@@ -20,9 +20,10 @@ public abstract class Operator implements Runnable{
 	 */
 	public Operator(String id) {
 		this.ID = id;
-		this.publisher = new Publisher();
-		this.buffer = new Hashtable<String, Buffer>();
+		this.publisher = new Publisher(id);
+		this.dataRepo = new Hashtable<String, Buffer>();
 	}
+	
 	
 	public ArrayList<String> getSubscribeFrom() {
 		return subscribeFrom;
@@ -35,15 +36,15 @@ public abstract class Operator implements Runnable{
 	 */
 	public void setSubscribeFrom(ArrayList<String> subscribeFrom) {
 		this.subscribeFrom = subscribeFrom;
-		this.requestToRegist();
 	}
 
-	private void requestToRegist(){
+	public void requestToRegist(){
 		try{
 			for(String id: subscribeFrom){
-				Operator op = Devices.getDeviceManager().getOperator(id);
+				Operator op = Devices.getOperator(id);
 				if(op!=null){
 					op.getPublisher().regist(this);
+					this.dataRepo.put(id, new Buffer());
 				}else{
 					throw new NotFoundOperatorException("The Operator '" + id + "' is not found\n");
 				}
@@ -52,7 +53,6 @@ public abstract class Operator implements Runnable{
 		}catch(NotFoundOperatorException e){
 			System.err.println(e);
 		}
-		
 	}
 	
 	public void run() {
@@ -66,13 +66,13 @@ public abstract class Operator implements Runnable{
 		ArrayList<DataContainer> recievedData = new ArrayList<DataContainer>();
 		
 		for(String device: subscribeFrom){
-
-			Buffer b = this.buffer.get(device);
-			recievedData.add(b.getData().clone());
-			
-			b.getData().getDataList().clear();
-			b.getData().set(null);
-			
+			Buffer b = this.dataRepo.get(device);
+			Devices.operatingDevicesOperator.size();
+			if(b!=null && b.getData()!=null){
+				recievedData.add(b.getData().clone());
+//				b.getData().getDataList().clear();
+				b.getData().set(null);
+			}
 		}
 		
 		return recievedData;
@@ -86,6 +86,10 @@ public abstract class Operator implements Runnable{
 		return publisher;
 	}
 	
+	public Hashtable<String, Buffer> getDataRepo() {
+		return dataRepo;
+	}
+
 	public String getID() {
 		return this.ID;
 	}

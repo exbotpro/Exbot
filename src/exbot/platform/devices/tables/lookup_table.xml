@@ -4,5 +4,5 @@
 	<Device id = "413c:2105" name="Keyboard" app_name="" path="mouse.Mouse"/>
 	<Device id = "ffff8086:1e26" name="exception" app_name="" path="keyboard.KeyBoard"/>
 	<Device id = "b1ac:f000" name="pixy" app_name="" path="exbot.example.Pixy"/>
-	<Device id = "046d:c52b" name="Tracker" app_name="" path="exbot.example.controllers.Tracker"/>
+	<Device id = "046d:c52b" name="Tracker" app_name="" path="exbot.example.sensers.pixy.Pixy"/>
 </DeviceList>
