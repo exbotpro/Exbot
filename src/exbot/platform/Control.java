@@ -1,10 +1,8 @@
 package exbot.platform;
 
-import java.util.Enumeration;
-import java.util.concurrent.ConcurrentHashMap;
-
 import exbot.dev.core.interfaces.Operator;
-import exbot.platform.devices.Devices;
+import exbot.example.controllers.Tracker;
+import exbot.platform.devices.AppFinder;
 import exbot.platform.devices.USBWatcher;
 import exbot.platform.devices.tables.LookupTableWrapper;
 
@@ -15,14 +13,9 @@ public class Control {
 		LookupTableWrapper.initTable();
 		new USBWatcher();
 		
+		Operator tracker = new Tracker("tracker");
+		AppFinder.registOperator(tracker);
+		tracker.run();
 		
-		ConcurrentHashMap<String, Operator> map = Devices.getOperatingDevicesOperator();
-		Enumeration<String> e = map.keys();
-		while(e.hasMoreElements()) {
-	        System.out.println(e.nextElement());
-	    }
-		
-		
-		while(true){}
 	}
 }

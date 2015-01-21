@@ -3,7 +3,7 @@ package exbot.platform.data;
 import java.util.ArrayList;
 
 import exbot.dev.core.interfaces.Operator;
-import exbot.dev.core.interfaces.ProducedData;
+import exbot.dev.core.interfaces.DataContainer;
 
 public class Publisher {
 	
@@ -13,7 +13,7 @@ public class Publisher {
 		this.subscribers.add(op);
 	}
 	
-	public void announce(ProducedData data){
+	public void announce(DataContainer data){
 		for(Operator sb: subscribers){
 			
 		}

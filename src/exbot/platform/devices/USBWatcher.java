@@ -40,7 +40,7 @@ public class USBWatcher implements Runnable{
 				Operator op = appInitiator.getDevice(id);
 				if(op!=null){
 					System.out.println(id);
-					appInitiator.registOperator(op);
+					AppFinder.registOperator(op);
 					appInitiator.init(op);
 				}
 			}
@@ -67,8 +67,8 @@ public class USBWatcher implements Runnable{
 						String id = getID(arg0.getUsbDevice().toString());
 						Operator op = appInitiator.getDevice(id);
 						if(op!=null){
-							System.out.println(id);
-							appInitiator.registOperator(op);
+							System.out.println("plugged device: "+id);
+							AppFinder.registOperator(op);
 							appInitiator.init(op);
 						}else{
 							System.err.println(id);
@@ -78,11 +78,13 @@ public class USBWatcher implements Runnable{
 
 					public void usbDeviceDetached(UsbServicesEvent arg0) {
 						String id = getID(arg0.getUsbDevice().toString());
-						System.out.println(id);
+						System.out.println("unplugged device: "+id);
 						Operator op = Devices.getDeviceManager().getOperator(id);
-						op.stop(false);
-						(new Thread(op)).stop();
-						Devices.getDeviceManager().removeOperator(id);
+						if(op!=null){
+							op.stop(false);
+							(new Thread(op)).stop();
+							Devices.getDeviceManager().removeOperator(id);
+						}
 					}
 					
 		        });

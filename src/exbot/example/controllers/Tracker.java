@@ -3,7 +3,7 @@ package exbot.example.controllers;
 import java.util.ArrayList;
 
 import exbot.dev.core.interfaces.Operator;
-import exbot.dev.core.interfaces.ProducedData;
+import exbot.dev.core.interfaces.DataContainer;
 
 public class Tracker extends Operator{
 	
@@ -17,13 +17,14 @@ public class Tracker extends Operator{
 	 */
 	private ArrayList<String> setPublisher(){
 		ArrayList<String> publisher = new ArrayList<String>();
+		publisher.add("046d:c52b");
 		return publisher;
 	}
 	
 
-	protected ProducedData performs() {
-//		System.out.println("Tracker run");
-		return new TrackData("T");
+	protected DataContainer performs(ArrayList<DataContainer> recievedData) {
+
+		return new TrackDataContainer(super.ID);
 	}
 
 }
