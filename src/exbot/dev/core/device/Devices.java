@@ -1,4 +1,4 @@
-package exbot.platform.devices;
+package exbot.dev.core.device;
 
 import java.util.HashMap;
 

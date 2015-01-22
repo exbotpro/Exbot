@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DeviceList>
-	<Device id = "461:4d22" name="Mouse" app_name="" path="exbot.example.Mouse"/>
-	<Device id = "413c:2105" name="Keyboard" app_name="" path="mouse.Mouse"/>
-	<Device id = "ffff8086:1e26" name="exception" app_name="" path="keyboard.KeyBoard"/>
-	<Device id = "b1ac:f000" name="pixy" app_name="" path="exbot.example.Pixy"/>
-	<Device id = "046d:c52b" name="Tracker" app_name="" path="exbot.example.sensers.pixy.Pixy"/>
+	<Device id = "046d:c52b11" name="Camera App" app_name="" path="camera.Pixy"/><Device
+		id="tracker" path="tracker.Tracker">
+</Device>
 </DeviceList>

@@ -1,4 +1,4 @@
-package exbot.platform.data;
+package exbot.dev.core.comm;
 
 import java.util.ArrayList;
 

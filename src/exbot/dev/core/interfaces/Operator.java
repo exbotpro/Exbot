@@ -3,8 +3,8 @@ package exbot.dev.core.interfaces;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import exbot.platform.data.Publisher;
-import exbot.platform.devices.Devices;
+import exbot.dev.core.comm.Publisher;
+import exbot.dev.core.device.Devices;
 
 
 public abstract class Operator implements Runnable{
@@ -24,12 +24,8 @@ public abstract class Operator implements Runnable{
 		this.dataRepo = new Hashtable<String, Buffer>();
 	}
 	
-	
-	public ArrayList<String> getSubscribeFrom() {
-		return subscribeFrom;
-	}
-	
 	/**
+	 * This method is for Controller and Actuator Application
 	 * if you want to subscribe from publishers, 
 	 * call this method for registering your application to the publishers you delivers
 	 * @param subscribeFrom: list of publishers
@@ -37,24 +33,49 @@ public abstract class Operator implements Runnable{
 	public void setSubscribeFrom(ArrayList<String> subscribeFrom) {
 		this.subscribeFrom = subscribeFrom;
 	}
+	
 
+	/**
+	 * This method is for Controller and Actuator applications
+	 * @return
+	 */
+	public ArrayList<String> getSubscribeFrom() {
+		return subscribeFrom;
+	}
+	
+	
+	/**
+	 * This method is for Controller and Actuator applications.
+	 * The method requests to regist the current operator to other applications 
+	 * that the current operator wants to be subscribed from.
+	 */
 	public void requestToRegist(){
 		try{
 			for(String id: subscribeFrom){
+				Devices.operatingDevicesOperator.size();
 				Operator op = Devices.getOperator(id);
 				if(op!=null){
-					op.getPublisher().regist(this);
+					op.getPublisher().regist(this); //regist the current operator to the publisher of the operator producing data that the current want to recieve.
 					this.dataRepo.put(id, new Buffer());
 				}else{
+					//If the operator is not exist, throw the "NotFoundOperatorException"
 					throw new NotFoundOperatorException("The Operator '" + id + "' is not found\n");
 				}
 			}
 			
 		}catch(NotFoundOperatorException e){
+			//If this exception is thrown, the re-scan the devices to figure out the device truly doesn't exist.
+			e.printStackTrace();
 			System.err.println(e);
 		}
 	}
 	
+	/**
+	 * Main method to run the operator (device)
+	 * The method is infinitely run until "running" flag turns into false value.
+	 * When the operator runs, 1) getting recieved data, producing new data in DataContainer,
+	 * 2) announcing the produced data to the its subscribers using publisher are carried out.
+	 */
 	public void run() {
 		while(running){
 			DataContainer data = this.performs(this.getRecievedData());

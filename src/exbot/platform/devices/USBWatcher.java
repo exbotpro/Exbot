@@ -13,6 +13,7 @@ import javax.usb.event.UsbServicesListener;
 
 import org.usb4java.Context;
 
+import exbot.dev.core.device.Devices;
 import exbot.dev.core.interfaces.Operator;
 
 public class USBWatcher implements Runnable{
@@ -25,7 +26,6 @@ public class USBWatcher implements Runnable{
 	public void run(){
 		this.scanDevice();
 		this.registConnectionOfOperators();
-		
 		this.watchDevice(new Context(), (short) (0x046d), (short) (0xc077));
 	}
 	
