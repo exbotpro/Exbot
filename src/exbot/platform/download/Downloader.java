@@ -1,4 +1,4 @@
-package down;
+package exbot.platform.download;
 
 import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
@@ -13,17 +13,18 @@ import java.net.URLConnection;
 
 public class Downloader {
 	
-	public FileOutputStream downWithProxy(String urlOfApp){
+	public FileOutputStream downWithProxy(String repository, String path, String appName, String localPath){
 		FileOutputStream out = null;
 		try {
-			URL website = new URL(urlOfApp);
+			URL website = new URL(repository + path + appName);
 			
 			Proxy proxy = new Proxy(Proxy.Type.HTTP, 
 					new InetSocketAddress("cache.kettering.edu",3128));
 			
 			URLConnection conn = website.openConnection(proxy);
 			InputStream in = conn.getInputStream();
-	        out = new FileOutputStream("BcfiHtm.zip");
+			
+	        out = new FileOutputStream(localPath + "/" + appName);
 	        
 	        byte[] b = new byte[1024];
 	        int count;
@@ -70,20 +71,5 @@ public class Downloader {
 		
 		return out;
 	}
-	
-
-	public static void main(String[] args){
-
-		Path path = new Path();
-		path.findApp("046d:c52b");
-		String repository = path.getRepository();
-		String appPath = path.getPath();
-		String appName = path.getApp();
-		String localPath = path.getLocalPath();
-		Downloader downloader = new Downloader();
-		downloader.down(repository, appPath, appName, localPath);
-		
-	}
-	
 	
 }

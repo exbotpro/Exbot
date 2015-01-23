@@ -1,23 +1,29 @@
-package down;
+package exbot.platform.download;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import exbot.dev.core.interfaces.NotFoundOperatorException;
+import exbot.platform.xml.XMLHandler;
+
 public class Path extends XMLHandler{
 	
 	private String repositoryDescriptor = "http://swquality.cafe24.com/exbot/repository/manifest.xml";
 	private String repository = "http://swquality.cafe24.com/exbot/repository/";
-	private String path = "camera/";
-	private String app = "camera.jar";
-	private String localPath= "C:/Users/zuna/git/Exbot/lib";
 	
+	private String path = "";
+	private String app = "";
+	private String classPath = "";
 	
-	public String getLocalPath() {
-		return localPath;
+	public static String localAppRepostoryPath= "C:/Users/zuna/git/Exbot/lib/";
+	public static String lookupTablePath = "src/exbot/platform/devices/tables/lookup_table.xml";
+	
+	public String getClassPath() {
+		return classPath;
 	}
-
+	
 	public String getRepository() {
 		return repository;
 	}
@@ -26,7 +32,6 @@ public class Path extends XMLHandler{
 		
 		try{
 			String fullPath = this.findPath(id);
-			
 			if(fullPath==null){
 				throw new NotFoundOperatorException("There is no app for the device [" + id + "] "
 						+ "you have been inserted in the repository");
@@ -41,7 +46,7 @@ public class Path extends XMLHandler{
 	
 	public String findPath(String id){
 		
-		Document doc = super.getXMLDocument(repositoryDescriptor);
+		Document doc = super.getXMLDocumentFromWebViaProxy(repositoryDescriptor);
 		NodeList nList = doc.getElementsByTagName("Apps");
 		Element e = null;
 		for (int appIdx = 0; appIdx < nList.getLength(); appIdx++) {
@@ -67,6 +72,7 @@ public class Path extends XMLHandler{
 		return elements[elements.length-1];
 	}
 
+	
 	public String getPath() {
 		return path;
 	}

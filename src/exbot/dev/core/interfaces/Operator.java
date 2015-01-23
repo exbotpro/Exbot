@@ -50,6 +50,7 @@ public abstract class Operator implements Runnable{
 	 * that the current operator wants to be subscribed from.
 	 */
 	public void requestToRegist(){
+		
 		try{
 			for(String id: subscribeFrom){
 				Devices.operatingDevicesOperator.size();
