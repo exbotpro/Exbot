@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="lib/commons-lang3-3.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/tracker.jar"/>
 	<classpathentry kind="lib" path="lib"/>
+	<classpathentry kind="lib" path="lib/camera.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

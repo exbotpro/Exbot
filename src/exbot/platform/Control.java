@@ -17,6 +17,5 @@ public class Control {
 		Operator tracker = new Tracker("tracker");
 		AppFinder.registOperator(tracker);
 		tracker.run();
-		
 	}
 }

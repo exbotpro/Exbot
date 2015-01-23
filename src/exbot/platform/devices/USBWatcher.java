@@ -15,6 +15,7 @@ import org.usb4java.Context;
 
 import exbot.dev.core.device.Devices;
 import exbot.dev.core.interfaces.Operator;
+import exbot.platform.download.Path;
 
 public class USBWatcher implements Runnable{
 	private AppFinder appInitiator = new AppFinder(); 

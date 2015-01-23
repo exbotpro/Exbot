@@ -17,8 +17,9 @@ public class Path extends XMLHandler{
 	private String app = "";
 	private String classPath = "";
 	
-	public static String localAppRepostoryPath= "C:/Users/zuna/git/Exbot/lib/";
+	public static String localAppRepostoryPath= "D:/exbotwork/Exbot/lib/";
 	public static String lookupTablePath = "src/exbot/platform/devices/tables/lookup_table.xml";
+	public static String localClassPathFile = "D:/exbotwork/Exbot/.classpath";
 	
 	public String getClassPath() {
 		return classPath;
@@ -46,15 +47,16 @@ public class Path extends XMLHandler{
 	
 	public String findPath(String id){
 		
-		Document doc = super.getXMLDocumentFromWebViaProxy(repositoryDescriptor);
-		NodeList nList = doc.getElementsByTagName("Apps");
+		Document doc = super.getXMLDocumentFromWeb(repositoryDescriptor);
+		NodeList nList = doc.getElementsByTagName("App");
 		Element e = null;
 		for (int appIdx = 0; appIdx < nList.getLength(); appIdx++) {
 			Node nNode = nList.item(appIdx);
 			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 				e = (Element) nNode;
 	 			if(e.getAttribute("id").equals(id)){
-	 				return e.getAttribute("path");
+	 				this.classPath = e.getAttribute("classpath");
+	 				this.app = this.findAppName(e.getAttribute("path"));
 	 			}
 			}
 		}

@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <DeviceList>
-<Device id="tracker" jar="tracker.jar" path="tracker.Tracker">
-</Device>
-
-
-
+<Device id="046d:c52b" jar="D:/exbotwork/Exbot/lib/camera.jar" path="camera.Pixy"/>
 </DeviceList>

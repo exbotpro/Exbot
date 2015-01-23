@@ -1,6 +1,7 @@
 package exbot.platform.download;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -49,8 +50,12 @@ public class Downloader {
 		
 		FileOutputStream out = null;
 		try {
-			BufferedInputStream in = new BufferedInputStream(new URL(repository + path + appName).openStream());
-	        out = new FileOutputStream(localPath + "/" + appName);
+			BufferedInputStream in = new BufferedInputStream(new URL("http://swquality.cafe24.com/exbot/repository/camera/camera.jar").openStream());
+			File outFile = new File(localPath + appName);
+			if(!outFile.exists()) {
+				outFile.createNewFile();
+			}
+	        out = new FileOutputStream(outFile);
 	        
 	        byte[] b = new byte[1024];
 	        int count;

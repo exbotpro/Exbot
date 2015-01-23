@@ -22,7 +22,7 @@ import org.w3c.dom.NodeList;
 
 public class XMLHandler {
 
-	protected static Document getXMLDocument(String docPath){
+	public static Document getXMLDocument(String docPath){
 		Document doc = null;
 		try {
 			File fXmlFile = new File(docPath);
@@ -37,7 +37,7 @@ public class XMLHandler {
 		return doc;
 	}
 	
-	protected static Element getDevice(Document doc, String id) throws NullPointerException{
+	public static Element getDevice(Document doc, String id) throws NullPointerException{
 		NodeList nList = doc.getElementsByTagName("Device");
 		Element e = null;
 		for (int temp = 0; temp < nList.getLength(); temp++) {
@@ -53,7 +53,7 @@ public class XMLHandler {
 		return null;
 	}
 	
-	protected static boolean addDevice(
+	public static boolean addDevice(
 			Document doc, String parentNode, String newNode, 
 			String docPath, String jarPath, String id, String path) throws NullPointerException{
 		
@@ -75,7 +75,27 @@ public class XMLHandler {
 		return true;
 	}
 	
-	protected static void save(Document doc, String docPath) throws Exception{
+	public static boolean addClassPath(Document doc, String docPath, 
+			String parentNode, String newNode, String path) throws NullPointerException{
+		
+		try{
+			NodeList nList = doc.getElementsByTagName(parentNode);
+			Element cp = (Element)nList.item(0);
+			Element entry = doc.createElement(newNode);
+			entry.setAttribute("kind", "lib");
+			entry.setAttribute("path", path);
+			cp.appendChild(entry);	
+			save(doc, docPath);
+			
+		}catch(Exception e){
+			return false;
+		}
+		
+        
+		return true;
+	}
+	
+	public static void save(Document doc, String docPath) throws Exception{
 		
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
@@ -86,7 +106,7 @@ public class XMLHandler {
         
 	}
 	
-	protected static Document getXMLDocumentFromWeb(String desciptorURL){
+	public static Document getXMLDocumentFromWeb(String desciptorURL){
 		Document doc=null;
 		try {
 			URL url = new URL(desciptorURL);
@@ -99,7 +119,7 @@ public class XMLHandler {
         return doc;
     }
 	
-	protected static Document getXMLDocumentFromWebViaProxy(String desciptorURL){
+	public static Document getXMLDocumentFromWebViaProxy(String desciptorURL){
 		Document doc=null;
 		try {
 			URL url = new URL(desciptorURL);

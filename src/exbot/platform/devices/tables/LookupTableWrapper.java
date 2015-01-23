@@ -1,16 +1,11 @@
 package exbot.platform.devices.tables;
 
 import java.io.File;
-import java.lang.reflect.Constructor;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import exbot.dev.core.interfaces.Operator;
-import exbot.platform.download.Path;
 import exbot.platform.xml.XMLHandler;
 
 public class LookupTableWrapper extends XMLHandler{
@@ -21,18 +16,19 @@ public class LookupTableWrapper extends XMLHandler{
 		
 	}
 	
-	public static String getPath(String id){
+	public static String getElement(String id, String attName){
 		
-		String path = "";
+		String att = "";
 		
 		try{
-			path = XMLHandler.getDevice(doc, id).getAttribute("path");
+			att = XMLHandler.getDevice(doc, id).getAttribute(attName);
 		}catch(NullPointerException e){
 			System.err.println("Cannot Found " + id + " Device");
 		}
 		
-		return path;
+		return att;
 	}
+	
 	
 	public static void addDevice(String docPath, String id, String jarPath, String classPath){
 		doc = XMLHandler.getXMLDocument(docPath);
@@ -52,7 +48,6 @@ public class LookupTableWrapper extends XMLHandler{
 	}
 	
 	private static void initialCheckPath(){
-		
 		try{
 			
 			NodeList nList = doc.getElementsByTagName("Device");
@@ -60,44 +55,21 @@ public class LookupTableWrapper extends XMLHandler{
 			for(int i =0 ; i < nList.getLength() ; i++){
 				Element e = (Element)nList.item(i);
 				String jarFile = e.getAttribute("jar");
-				String classPath = e.getAttribute("path");
 				
-				File tmpFile = new File(Path.localAppRepostoryPath + "/" + jarFile);
+				File tmpFile = new File(jarFile);
 				
 				if(!tmpFile.exists() || jarFile.equals("")){
 					removeNode(e);
-				}else{
-					if(!initialCheckClassLoading(tmpFile, classPath)){
-						removeNode(e);
-					}
 				}
 			}
 			
 		}catch(Exception e){
-			
+			System.err.println("error");
 		}
 	}
 	
 	private static void removeNode(Element e) throws Exception{
 		e.getParentNode().removeChild(e);
-	}
-	
-	private static boolean initialCheckClassLoading(File jarFile, String classPath) throws Exception{
-		boolean chk = false;
-		
-		URLClassLoader cl = URLClassLoader.newInstance(new URL[] {new URL("file://" + jarFile.getAbsolutePath())});
-		
-		Class<?> c = cl.loadClass(classPath);
-		Constructor<?> con = c.getDeclaredConstructors()[0];
-		Object obj = con.newInstance(new Object[] {new String("test")});
-		
-		if(obj instanceof Operator){
-			chk = true;
-		}else{
-			chk = false;
-		}
-		
-		return chk;
 	}
 	
 }
