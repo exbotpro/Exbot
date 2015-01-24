@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Apps>
+	<App id = "046d:c52b" name="Camera App" path="/camera/camera.jar" classpath="camera.Pixy"/>
+</Apps>
