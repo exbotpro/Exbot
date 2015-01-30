@@ -1,6 +1,6 @@
 package exbot.platform;
 
-import control.Controller;
+import controller.Controller;
 import exbot.dev.core.interfaces.Operator;
 import exbot.platform.devices.AppFinder;
 import exbot.platform.devices.USBWatcher;
@@ -14,8 +14,8 @@ public class Control {
 		LookupTableWrapper.initTable(Path.lookupTablePath);
 		new USBWatcher();
 		
-		Operator tracker = new Controller("control");
-		AppFinder.registOperator(tracker);
-		tracker.run();
+		Operator control = new Controller("control");
+		AppFinder.registOperator(control);
+		control.run();
 	}
 }
