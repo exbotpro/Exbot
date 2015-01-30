@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <DeviceList>
 
-<Device id="046d:c52b" jar="D:/exbotwork/Exbot/lib/camera.jar" path="camera.Pixy"/>
+<Device id="046d:c52b" jar="D:/exbotwork/Exbot/lib/sensor.jar" path="sensor.Imager"/>
+<Device id="control" jar="D:/exbotwork/Exbot/lib/control.jar" path="control.Controller">
+</Device>
 </DeviceList>
