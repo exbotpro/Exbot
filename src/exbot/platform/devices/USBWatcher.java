@@ -15,7 +15,6 @@ import org.usb4java.Context;
 
 import exbot.dev.core.device.Devices;
 import exbot.dev.core.interfaces.Operator;
-import exbot.platform.download.Path;
 
 public class USBWatcher implements Runnable{
 	private AppFinder appInitiator = new AppFinder(); 
@@ -27,7 +26,7 @@ public class USBWatcher implements Runnable{
 	public void run(){
 		this.scanDevice();
 		this.registConnectionOfOperators();
-		this.watchDevice(new Context(), (short) (0x046d), (short) (0xc077));
+		this.watchDevice();
 	}
 	
 	private void registConnectionOfOperators() {
@@ -68,7 +67,7 @@ public class USBWatcher implements Runnable{
 		return tok[tok.length-1];
 	}
 	
-	public void watchDevice(Context context, short vendorId, short productId) {
+	public void watchDevice() {
 		 
 		 try {
 				UsbServices services = UsbHostManager.getUsbServices();
@@ -86,6 +85,7 @@ public class USBWatcher implements Runnable{
 						
 					}
 
+					@SuppressWarnings("deprecation")
 					public void usbDeviceDetached(UsbServicesEvent arg0) {
 						String id = getID(arg0.getUsbDevice().toString());
 						System.out.println("unplugged device: "+id);
@@ -99,10 +99,8 @@ public class USBWatcher implements Runnable{
 					
 		        });
 			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (UsbException e) {
-				// TODO Auto-generated catch block
 			}
     }
 }

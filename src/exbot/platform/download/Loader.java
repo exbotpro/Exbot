@@ -11,6 +11,7 @@ import exbot.platform.devices.tables.LookupTableWrapper;
 import exbot.platform.xml.XMLHandler;
 
 public class Loader {
+	@SuppressWarnings({ "rawtypes", "resource" })
 	public static Operator load(String id, String classPath, String jarPath){
 		Operator op = null;
 		try {
